@@ -6,10 +6,10 @@ from torchvision.transforms import transforms
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-from GAN.Conv_Example.Critic import Critic
+from GAN.Conv_Example.w_loss.Critic import Critic
 from GAN.Conv_Example.Generator import Generator, get_noise
 from GAN.Conv_Example.utils import show_tensor_images
-from GAN.Conv_Example.utils_for_w_loss import gradient_penalty, get_gradient, get_crit_loss, get_gen_loss
+from GAN.Conv_Example.w_loss.utils_for_w_loss import gradient_penalty, get_gradient, get_crit_loss, get_gen_loss
 
 n_epochs = 100
 z_dim = 64

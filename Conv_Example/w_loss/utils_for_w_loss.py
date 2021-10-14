@@ -14,20 +14,10 @@ def get_gradient(crit, real, fake, epsilon):
     '''
     # Mix the images together
     mixed_images = real * epsilon + fake * (1 - epsilon)
-
-    # Calculate the critic's scores on the mixed images
     mixed_scores = crit(mixed_images)
-
-    # Take the gradient of the scores with respect to the images
     gradient = torch.autograd.grad(
-        # Note: You need to take the gradient of outputs with respect to inputs.
-        # This documentation may be useful, but it should not be necessary:
-        # https://pytorch.org/docs/stable/autograd.html#torch.autograd.grad
-        #### START CODE HERE ####
         inputs=mixed_images,
         outputs=mixed_scores,
-        #### END CODE HERE ####
-        # These other parameters have to do with the pytorch autograd engine works
         grad_outputs=torch.ones_like(mixed_scores),
         create_graph=True,
         retain_graph=True,
@@ -50,11 +40,7 @@ def gradient_penalty(gradient):
 
     # Calculate the magnitude of every row
     gradient_norm = gradient.norm(2, dim=1)
-
-    # Penalize the mean squared distance of the gradient norms from 1
-    #### START CODE HERE ####
     penalty = torch.mean((gradient_norm - 1) ** 2)
-    #### END CODE HERE ####
     return penalty
 
 def get_gen_loss(crit_fake_pred):
@@ -65,9 +51,8 @@ def get_gen_loss(crit_fake_pred):
     Returns:
         gen_loss: a scalar loss value for the current batch of the generator
     '''
-    #### START CODE HERE ####
+
     gen_loss = -1. * torch.mean(crit_fake_pred)
-    #### END CODE HERE ####
     return gen_loss
 
 def get_crit_loss(crit_fake_pred, crit_real_pred, gp, c_lambda):
@@ -82,8 +67,6 @@ def get_crit_loss(crit_fake_pred, crit_real_pred, gp, c_lambda):
     Returns:
         crit_loss: a scalar for the critic's loss, accounting for the relevant factors
     '''
-    #### START CODE HERE ####
     crit_loss = torch.mean(crit_fake_pred) - torch.mean(crit_real_pred) + c_lambda * gp
-    #### END CODE HERE ####
     return crit_loss
 
